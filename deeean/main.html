@@ -20,16 +20,20 @@
 			display: none;
 		}
 
+		h1{
+			font-size: 80px;
+		}
+
 		#text{
 			width: 98%;
 			text-align: center;
 			color: #ffffff;
 			position: absolute;
 			top: 80%;
+			font-family: 'Courier New', monospace;
 		}
 
 		#t{
-			font-family: 'Courier New', monospace;
 			font-size: 40px;
 		}
 
@@ -122,6 +126,7 @@
 		} else {
 			flutter = 0;
 		}*/
+		clear();
 		draw(j);
 		j += 0.02;
 		window.requestAnimationFrame(tick);
