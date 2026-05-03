@@ -29,7 +29,8 @@
 		}
 
 		#t{
-			font-size: 20px;
+			font-family: 'Courier New', monospace;
+			font-size: 40px;
 		}
 
 	</style>
@@ -40,7 +41,7 @@
 	<div id="text">
 		<h1>000EIH - EP</h1>
 		<div id="t">
-		<a href="/">Listen here</a>
+		<a href="https://untitled.stream/library/project/u1frtZe04nKZixNx7pTAs?fbclid=PAVERFWARjthtleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAaf2D7Rexhr0QaYdIFe1At-Ps5JrtfHSU5l-aG75rWMVS9LioXezLfDgR3LXOQ_aem_QfN2MvtaCSisGJjyfe75Nw">Listen here</a>
 		Listen in order (transitions may be skewed, this is due to the app).
 		<p>
 		Hello, As many of you know me, I have been a music fan for a while and this is my firse ever project to have worked on and curate for people to hear.
@@ -109,7 +110,7 @@
 	var flutter = 0;
 
 	function tick(){
-		if(toggle == 1){
+		/*if(toggle == 1){
 			toggle = 0;
 		} else {
 			toggle =  1;
@@ -120,7 +121,8 @@
 			flutter++;
 		} else {
 			flutter = 0;
-		}
+		}*/
+		draw(j);
 		j += 0.02;
 		window.requestAnimationFrame(tick);
 	}	
