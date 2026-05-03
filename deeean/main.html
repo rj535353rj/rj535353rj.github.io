@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<head>
+	<title>Dean's EP</title>
+	<!--Authored by rj-->
+	<style>
+		
+		body{
+			background-color: #000;
+		}
+
+		canvas{
+			width: 800px;
+			height: 800px;
+			position: absolute;
+			left: 50%;
+			transform : translate(-50%, 0);
+		}
+
+		img{
+			display: none;
+		}
+
+		#text{
+			width: 98%;
+			text-align: center;
+			color: #ffffff;
+			position: absolute;
+			top: 80%;
+		}
+
+		#t{
+			font-size: 20px;
+		}
+
+	</style>
+	<img src="IMG_2957.jpg" id="image" onload="main();"> </img>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="800"> </canvas>
+	<div id="text">
+		<h1>000EIH - EP</h1>
+		<div id="t">
+		<a href="/">Listen here</a>
+		Listen in order (transitions may be skewed, this is due to the app).
+		<p>
+		Hello, As many of you know me, I have been a music fan for a while and this is my firse ever project to have worked on and curate for people to hear.
+		<p>
+		This album does not consist of my own vocals; it is an artist known as Lancey Faux.
+		<p>
+		I have been a big fan of Lancey for years, I have been following since his rollout of his album, 'LIFE IN HELL', which is what deeply inspired me to make this project. Lancey has made a lot of music around this era, alost all of it being unfinished and unpublished. Using my efforts, I decided to make an ultimate maximalised version of what I decided to be the best version of LIFE IN HELL
+		<p>
+		This profect is a work-in-progress. These are the few tracks I have worked on so far. Will be adding more and more. The provided trackes are finished (some rough mixing), feel free to provide feedback.
+		</div>
+	</div>
+</body>
+
+<script>
+	var of = new OffscreenCanvas(256,256);
+	var otx = of.getContext("2d");
+
+	var c = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+
+	var img = document.getElementById("image");
+
+	function fillOf(){
+		otx.drawImage(img, 0, 0, 256, 256);
+	}
+
+	function transX(x){
+		return (x + 1) * 400;
+	}
+
+	function transY(y){
+		return 800 - ((y + 1) * 400);
+	}
+
+	function interpolate(a, b, i){
+ 		return (a*(1-i)) + (b * i)
+	}
+
+	function clear(){
+		ctx.fillStyle = "rgba(0, 0, 0, 1)";
+		ctx.fillRect(0, 0, 800, 800);
+	}
+
+	function draw(theta){
+		var originX = 0;
+		var originZ = 2;
+		var wallX = Math.cos(theta);
+		var wallZ = Math.sin(theta)+2;
+		var ballX = originX - wallX;
+		var ballZ = originZ - wallZ + 2;
+		var projX = wallX/wallZ;
+		var brojX = ballX/ballZ;
+
+		for(let i = 0; i < 256; i++){
+			ctx.drawImage(of, i, 0, 1, 256, 
+				transX(interpolate(projX, brojX, i/256)),
+				transY(interpolate(1/wallZ, 1/ballZ, i/256)),
+				4,
+				800 * interpolate(1/wallZ, 1/ballZ, i/256)
+			);
+		}
+	}
+
+	var j = 0;
+	var toggle = 0;
+	var flutter = 0;
+
+	function tick(){
+		if(toggle == 1){
+			toggle = 0;
+		} else {
+			toggle =  1;
+		}
+		clear();
+		if(flutter != 7 && (j*100 % 100) > 3){
+			draw(j + toggle*Math.sin(j));
+			flutter++;
+		} else {
+			flutter = 0;
+		}
+		j += 0.02;
+		window.requestAnimationFrame(tick);
+	}	
+
+	function main(){
+		fillOf();
+		tick();
+	}
+
+</script>
