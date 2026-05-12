@@ -1,0 +1,187 @@
+<head>
+	<title>Addition game</title>
+<style>
+	#keyboard {
+		position: fixed;
+		top: 60vh;
+		height: 40vh;
+	}
+	#keyboard button {
+		width: 30vw;
+		height: 10vh;
+	}
+</style>
+</head>
+
+<body>
+	<table id="table">
+	</table>
+	<div id="record"> </div>
+	<div id="keyboard">
+		<div>
+			<button onclick="fone();">1</button>
+			<button onclick="ftwo();">2</button>
+			<button onclick="fthree();">3</button>
+		</div>
+		<div>
+			<button onclick="ffour();">4</button>
+			<button onclick="ffove();">5</button>
+			<button onclick="fsix();">6</button>
+		</div>
+		<div>
+			<button onclick="fseven();">7</button>
+			<button onclcik="feight();">8</button>
+			<button onclick="fnine();">9</button>
+		</div>
+		<div>
+			<button onclick="fdel();">del</button>
+			<button onclick="fzero();">0</button>
+			<button onclick="fent();">ent</button>
+		</div>
+	</div>
+</body>
+
+<script>
+
+var table = document.getElementById("table");
+
+class question{
+	constructor(q,a){
+		this.q = q;
+		this.a = a;
+	}
+}
+
+var current = [];
+
+function random(digits){
+	return Math.ceil(Math.random() * Math.pow(10,digits)) - 1;
+}
+
+function generateQuestion(){
+	var a = random(3);
+	var b = random(3);
+	current.push(new question(a + " + " + b + " =", a + b + ""));
+}
+
+console.log(current);
+
+var awnser = "";
+var count = 0;
+var inGame = 0;
+var lastGame = 0;
+
+function submit(){
+	if(awnser == current[0].a){
+		count++;
+		current.shift();
+		generateQuestion();
+		awnser = "";
+	}
+}
+
+function timesUp(){
+	lastGame = count;
+	count = 0;
+	inGame = 0;
+	document.getElementById("record").innerHTML = lastGame;
+}
+
+function tick(){
+	if(inGame == 0){
+		inGame = 1;	
+		window.setTimeout(timesUp, 0000);
+	} else {
+		//nothing yet
+	}
+	table.innerHTML = "";
+	table.innerHTML += "<tr><td>" + current[0].q + "</td><td>" + awnser + "</td></tr>";
+	for(let i = 1; i < current.length; i++){
+		table.innerHTML += "<tr><td>" + current[i].q + "</td><td></td></tr>";
+	}
+}
+
+window.addEventListener("keydown", (e) => {
+	var key = e.key;
+	if(key == "Backspace"){
+		awnser = awnser.slice(0,-1);
+	} else {
+		if(key == "Enter"){
+			submit();
+		} else {
+			awnser += key;
+		}
+	}
+	tick();
+});
+
+function fone(){
+	awnser += "1";
+	tick();
+}
+
+function ftwo(){
+	awnser += "2";
+	tick();
+}
+
+function fthree(){
+	awnser += "3";
+	tick();
+}
+
+function ffour(){
+	awnser += "4";
+	tick();
+}
+
+function ffive(){
+	awnser += "5";
+	tick();
+}
+
+function fsix(){
+	awnser += "6";
+	tick();
+}
+
+function fseven(){
+	awnser += "7";
+	tick();
+}
+
+function feight(){
+	awnser += "8";
+	tick();
+}
+
+function fnine(){
+	awnser += "9";
+	tick();
+}
+
+function fzero(){
+	awnser += "0";
+	tick();
+}
+
+function fdel(){
+	awnser = awnser.slice(0, -1);
+	tick();
+}
+
+function fent(){
+	submit();
+	tick();
+}
+
+function main(){
+	for(let i = 0; i < 10; i++){
+		generateQuestion();
+	}
+	tick();
+}
+
+main();
+
+</script>
